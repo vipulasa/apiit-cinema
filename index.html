@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinema X</title>
     <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="models/ticket.js"></script>
     <script src="models/movie.js"></script>
     <script src="models/payment.js"></script>
@@ -13,48 +14,52 @@
 </head>
 
 <body>
-    <pre>
-    1. We need a list of movies.
+    <div x-data="{
+        goToTickets(id) {
+            // store the movie id to local storage
+            localStorage.setItem('movieId', id);
+            
+            window.location.href = 'ticket.html';
+        }
+    }">
+        <div class="bg-white">
+            <div aria-hidden="true" class="relative">
+                <img src="https://tailwindui.com/img/ecommerce-images/product-feature-02-full-width.jpg" alt=""
+                    class="h-40 w-full object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-white"></div>
+            </div>
 
-    Movie
-    - Title
-    - Genre
-    - Duration
-    - Rating
-    - Description
-    - Image
+            <div class="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Cinema X</h2>
+                    <p class="mt-4 text-gray-500" x-text="$store.movie.name">
 
-    2. We need a Ticket
+                    </p>
+                </div>
 
-    Ticket
-    - Movie
-    - Date
-    - Time
-    - Seat
-    - Price
-    -- Adult
-    -- Child
-
-    3. We need a checkout Page (Payment)
-
-    Payment
-    - Name
-    - Email
-    - Phone
-    - Payment Method
-    - Credit Card
-    - Tickets
-
-    4. We need a confirmation page
-
-    Confirmation
-    - Name
-    - Email
-    - Phone
-    - Payment Method
-    - Tickets
-</pre>
-
+                <dl
+                    class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:max-w-none lg:grid-cols-3 lg:gap-x-8">
+                    <template x-for="(movie, id) in $store.movie.movies">
+                        <div class="border-t border-gray-200 pt-4 cursor-pointer"
+                            x-on:click="goToTickets(movie.id)">
+                            <dt class="font-medium text-gray-900">
+                                <img x-bind:src="movie.image" alt="">
+                                <span x-html="movie.title" class="block pt-5"></span>
+                            </dt>
+                            <dd class="mt-2 text-sm text-gray-500">
+                                <ul>
+                                    <li>Genre : <span x-html="movie.genre"></span></li>
+                                    <li>Duration : <span x-html="movie.duration"></span></li>
+                                    <li>Rating : <span x-html="movie.rating"></span></li>
+                                    <li>Description : <span x-html="movie.description"></span></li>                        
+                                </ul>
+                            </dd>
+                        </div>
+                    </template>
+                </dl>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

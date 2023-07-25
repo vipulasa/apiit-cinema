@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema X</title>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="models/ticket.js"></script>
+    <script src="models/movie.js"></script>
+    <script src="models/payment.js"></script>
+    <script src="models/confirmation.js"></script>
+</head>
+
+<body>
+    <div x-data="{
+        totalSeats: $store.ticket.slots.length,
+        selectedSeats: [],
+        selectSlot(id){
+            // check if the ID exists in the selectedSeats array
+            if(this.selectedSeats.includes(id)){
+                // remove the ID from the array
+                this.selectedSeats = this.selectedSeats.filter(item => item !== id);
+                return;
+            }
+            this.selectedSeats.push(id);
+        }
+    }">
+
+        <div class="bg-white">
+            <div aria-hidden="true" class="relative">
+                <img src="https://tailwindui.com/img/ecommerce-images/product-feature-02-full-width.jpg" alt=""
+                    class="h-40 w-full object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-white"></div>
+            </div>
+
+            <div class="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Cinema X</h2>
+                    <p class="mt-4 text-gray-500" x-text="$store.movie.name"></p>
+                </div>
+
+                <div>
+                    <h2>Select your seats <span x-text="selectedSeats.length"></span></h2>
+                    <div class="grid grid-cols-6 gap-y-8">
+                        <template x-for="(seat, id) in $store.ticket.slots">
+                            <div x-text="seat.id" 
+                            x-on:click="selectSlot(seat.id)"
+                            class="grid-cols-1 h-40 w-40 bg-blue-400 text-white text-center"></div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</body>
+
+</html>

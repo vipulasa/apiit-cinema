@@ -1,8 +1,8 @@
 console.info("movie model loaded");
 
 document.addEventListener("alpine:init", () => {
-  Alpine.store("movies", {
-    name: "Movies Model",
+  Alpine.store("movie", {
+    name: "Movies",
     movies: [
       {
         id: 1,
