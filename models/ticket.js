@@ -5,6 +5,7 @@ document.addEventListener("alpine:init", () => {
     name: "Ticket Model",
     timeSlots: [
       {
+        id: 1,
         start: "10:00",
         end: "12:00",
         price: {
@@ -13,6 +14,7 @@ document.addEventListener("alpine:init", () => {
         },
       },
       {
+        id: 2,
         start: "13:30",
         end: "15:30",
         price: {
@@ -21,6 +23,7 @@ document.addEventListener("alpine:init", () => {
         },
       },
       {
+        id: 3,
         start: "16:00",
         end: "18:00",
         price: {
@@ -29,6 +32,7 @@ document.addEventListener("alpine:init", () => {
         },
       },
       {
+        id: 4,
         start: "18:30",
         end: "20:30",
         price: {
@@ -37,6 +41,7 @@ document.addEventListener("alpine:init", () => {
         },
       },
       {
+        id: 5,
         start: "21.30",
         end: "23:30",
         price: {

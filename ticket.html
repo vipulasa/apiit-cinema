@@ -17,6 +17,10 @@
     <div x-data="{
         totalSeats: $store.ticket.slots.length,
         selectedSeats: [],
+        selectedDate: null,
+        selectedTime: null,
+        selectedAdultTickts: 0,
+        selectedChildTickts: 0,
         selectSlot(id){
             // check if the ID exists in the selectedSeats array
             if(this.selectedSeats.includes(id)){
@@ -25,6 +29,19 @@
                 return;
             }
             this.selectedSeats.push(id);
+        },
+        selectTimeSlot(id){
+            this.selectedTime = id;
+        },
+        goToPayment(){
+            // store the selected seats to local storage
+            localStorage.setItem('selectedSeats', JSON.stringify(this.selectedSeats));
+            localStorage.setItem('selectedDate', this.selectedDate);
+            localStorage.setItem('selectedTime', this.selectedTime);
+            localStorage.setItem('selectedAdultTickts', this.selectedAdultTickts);
+            localStorage.setItem('selectedChildTickts', this.selectedChildTickts);
+
+            window.location.href = 'payment.html';
         }
     }">
 
@@ -41,16 +58,61 @@
                     <p class="mt-4 text-gray-500" x-text="$store.movie.name"></p>
                 </div>
 
-                <div>
-                    <h2>Select your seats <span x-text="selectedSeats.length"></span></h2>
-                    <div class="grid grid-cols-6 gap-y-8">
-                        <template x-for="(seat, id) in $store.ticket.slots">
-                            <div x-text="seat.id" 
-                            x-on:click="selectSlot(seat.id)"
-                            class="grid-cols-1 h-40 w-40 bg-blue-400 text-white text-center"></div>
-                        </template>
+                <div class="mb-5">
+                    <h2 class="mb-4 text-2xl">Select your movie Date / Time</h2>
+                    <div>
+                        <label for="" class="block text-sm font-medium text-gray-700"></label>
+                        <input type="date" x-model="selectedDate"
+                            class="block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <div class="grid grid-cols-6 gap-y-8">
+                            <template x-for="(timeSlot, id) in $store.ticket.timeSlots">
+                                <div x-on:click="selectTimeSlot(timeSlot.id)"
+                                    x-bind:class="selectedTime == timeSlot.id ? 'bg-blue-600' : 'bg-blue-400'"
+                                    class="grid-cols-1 h-40 w-40 bg-blue-400 text-white text-center">
+                                    <span x-text="timeSlot.start"></span>
+                                    -
+                                    <span x-text="timeSlot.end"></span>
+                                </div>
+                            </template>
+                        </div>
+                        <h3 class="mt-4 text-xl" x-show="selectedTime">
+                            You have selected <span x-text="selectedTime"></span> seats</h3>
+                    </div>
+
+                    <div>
+                        <div class="col-span-full">
+                            <label>Adult Tickts</label>
+                            <div class="mt-1">
+                                <input type="number" x-model="selectedAdultTickts" class="border border-gray-200" />
+                            </div>
+                        </div>
+                        <div class="col-span-full">
+                            <label>Child Tickts</label>
+                            <div class="mt-1">
+                                <input type="number" x-model="selectedChildTickts" class="border border-gray-200" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div>
+                    <h2 class="mb-4 text-2xl">Select your seats</h2>
+                    <div class="grid grid-cols-6 gap-y-8">
+                        <template x-for="(seat, id) in $store.ticket.slots">
+                            <div x-text="seat.id" x-on:click="selectSlot(seat.id)"
+                                x-bind:class="selectedSeats.includes(seat.id) ? 'bg-blue-600' : 'bg-blue-400'"
+                                class="grid-cols-1 h-40 w-40 bg-blue-400 text-white text-center"></div>
+                        </template>
+                    </div>
+                    <h3 class="mt-4 text-xl" x-show="selectedSeats.length">You have selected <span
+                            x-text="selectedSeats.length"></span> seats</h3>
+                </div>
+
+
+                <button type="button" x-on:click="goToPayment">Checkout</button>
+
             </div>
 
 
