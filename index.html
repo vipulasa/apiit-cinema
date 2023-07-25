@@ -3,9 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cinema X</title>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="models/ticket.js"></script>
+    <script src="models/movie.js"></script>
+    <script src="models/payment.js"></script>
+    <script src="models/confirmation.js"></script>
 </head>
 <body>
-    
+
+    1. We need a list of movies.
+
+    Movie
+    - Title
+    - Genre
+    - Duration
+    - Rating
+    - Description
+    - Image
+
+    2. We need a Ticket
+
+    Ticket
+    - Movie
+    - Date
+    - Time
+    - Seat
+    - Price
+    -- Adult
+    -- Child
+
+    3. We need a checkout Page (Payment)
+
+    Payment
+    - Name
+    - Email
+    - Phone
+    - Payment Method
+    - Credit Card
+    - Tickets
+
+    4. We need a confirmation page
+
+    Confirmation
+    - Name
+    - Email
+    - Phone
+    - Payment Method
+    - Tickets
+
+    <div x-data="{
+
+    }">
+
+    <h1 x-html="$store.movies.name"></h1>
+
+    </div>
+
+
 </body>
 </html>
